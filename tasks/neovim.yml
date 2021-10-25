@@ -1,0 +1,12 @@
+- name: Neovim
+  tags:
+    - install
+    - neovim
+  block:
+    - name: Neovim - Clone repository
+      ansible.builtin.git:
+        repo: https://github.com/neovim/neovim.git
+        dest: ~/third_party/neovim
+
+    - name: Neovim - Build & install
+      shell: cd ~/third_party/neovim && make install

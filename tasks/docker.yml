@@ -1,0 +1,35 @@
+- name: Docker
+  become: true
+  tags:
+    - install
+    - docker
+  block:
+    - name: Docker - Install dependencies
+      ansible.builtin.apt:
+        name: '{{item}}'
+      with_items:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - software-properties-common
+
+    - name: Docker - Add apt key
+      ansible.builtin.apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+
+    - name: Docker - Add apt repository
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable
+
+    - name: Docker - Install
+      ansible.builtin.apt:
+        name: docker-ce
+        update_cache: yes
+        state: latest
+
+    - name: Docker - Adding '{{ ansible_user }}' to docker group
+      user:
+        name: '{{ ansible_user }}'
+        group: docker
+        append: yes

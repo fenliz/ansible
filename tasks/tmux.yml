@@ -1,0 +1,21 @@
+- name: tmux
+  tags:
+    - install
+    - tmux
+  block:
+    - name: Tmux - Install
+      ansible.builtin.apt:
+        name: tmux
+        state: latest
+
+    - name: Tmux - Check if .tmux exists
+      ansible.builtin.stat:
+        path: ~/.tmux
+      register: stat_tmux
+
+    - name: Tmux - Clone plugin manager
+      ansible.builtin.git:
+        repo: https://github.com/tmux-plugins/tpm
+        dest: ~/.tmux/plugins/tpm
+      when: not stat_tmux.stat.exists
+

@@ -1,0 +1,33 @@
+- name: oh-my-zsh
+  tags:
+    - install
+    - zsh
+  block:
+    - name: oh-my-zsh - Install zsh
+      become: true
+      ansible.builtin.apt:
+        name: zsh
+        state: latest
+
+    - name: oh-my-zsh - Check if .oh-my-zsh exists
+      ansible.builtin.stat:
+        path: ~/.oh-my-zsh
+      register: stat_oh_my_zsh
+
+    - name: oh-my-zsh - Clone repository
+      ansible.builtin.git:
+        repo: https://github.com/robbyrussell/oh-my-zsh
+        dest: ~/.oh-my-zsh
+      when: not stat_oh_my_zsh.stat.exists
+
+
+    - name: oh-my-zsh - Clone powerlevel10k theme repository
+      ansible.builtin.git:
+        repo: https://github.com/romkatv/powerlevel10k
+        depth: 1
+        dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+
+    - name: oh-my-zsh - Clone autosuggestions plugin
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions 
+        dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions

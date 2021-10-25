@@ -1,0 +1,15 @@
+- name: i3-gaps
+  become: true
+  tags:
+    - install
+    - i3
+  block:
+    - name: i3 - Add apt repository
+      ansible.builtin.apt_repository:
+        repo: ppa:regolith-linux/release
+
+    - name: i3 - Install
+      ansible.builtin.apt:
+        name: i3-gaps
+        update_cache: yes
+        state: latest

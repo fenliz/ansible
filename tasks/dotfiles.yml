@@ -1,0 +1,21 @@
+- name: .dotfiles
+  tags:
+    - install
+    - dotfiles
+  block:
+
+    - name: .dotfiles - Clone repository
+      ansible.builtin.git:
+        repo: https://github.com/fenliz/.dotfiles.git
+        dest: ~/development/.dotfiles
+        recursive: yes
+        update: yes
+        accept_hostkey: yes
+        version: master
+
+    - name: .dotfiles - Install stow
+      ansible.builtin.apt: 
+        name: stow
+
+    - name: .dotfiles - Stow files
+      shell: cd ~/development/.dotfiles && ./install.sh

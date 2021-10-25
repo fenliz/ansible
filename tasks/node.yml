@@ -1,0 +1,25 @@
+- name: Node
+  tags:
+    - install
+    - node
+  block:
+    - name: Node - Install nvm
+      ansible.builtin.shell: >
+        curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.39.0/install.sh | bash
+      args:
+        executable: /bin/bash
+        chdir: ~
+        creates: ~/.nvm/nvm.sh
+
+    - name: Node - Install node 14.18.1
+      ansible.builtin.shell: |
+        nvm install 14.18.1
+      args:
+        executable: /bin/bash
+        chdir: ~
+        creates: ~/.nvm/versions/node/v{{item}}"
+
+    - name: Node - Install yarn
+      npm:
+        name: yarn
+        global: yes

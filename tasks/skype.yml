@@ -1,0 +1,21 @@
+- name: Skype
+  become: true
+  tags:
+    - install
+    - skype
+  block:
+    - name: Skype - Add apt key
+      ansible.builtin.apt_key:
+        url: https://repo.skype.com/data/SKYPE-GPG-KEY
+        state: present
+
+    - name: Skype - Add apt repository
+      ansible.builtin.apt_repository:
+        repo: deb [arch=amd64] https://repo.skype.com/deb stable main
+        filename: skype-stable
+
+    - name: Skype - Install
+      ansible.builtin.apt:
+        name: skypeforlinux
+        update_cache: yes
+        state: latest
