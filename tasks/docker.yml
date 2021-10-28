@@ -28,8 +28,15 @@
         update_cache: yes
         state: latest
 
-    - name: Docker - Adding '{{ ansible_user }}' to docker group
+    - name: Docker - Adding {{ lookup('env', 'USER') }} to docker group
       user:
-        name: '{{ ansible_user }}'
-        group: docker
+        name: "{{ lookup('env', 'USER') }}"
+        groups: docker
         append: yes
+
+    - name: Docker - Install docker-compose
+      remote_user: "{{ lookup('env', 'USER') }}"
+      ansible.builtin.get_url:
+        url: https://github.com/docker/compose/releases/download/1.29.2/docker-compose-Linux-x86_64
+        dest: /usr/local/bin/docker-compose
+        mode: 'u+x,g+x'

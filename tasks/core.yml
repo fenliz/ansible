@@ -20,6 +20,7 @@
     - nm-applet
     - xclip
     - clipit
+    - fzf
   tags:
     - install
     - core
