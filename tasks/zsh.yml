@@ -1,0 +1,14 @@
+- name: Zsh
+  tags:
+    - install
+    - zsh
+  block:
+    - name: Zsh - Install
+      become: true
+      ansible.builtin.apt:
+       name: zsh
+
+    - name: Zsh - Clone auto-complete reposition
+      ansible.builtin.git:
+        repo: https://github.com/zsh-users/zsh-autosuggestions.git
+        dest: ~/third_party/zsh-autosuggestions

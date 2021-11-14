@@ -1,0 +1,38 @@
+- name: Alacritty
+  tags:
+    - install
+    - alacritty
+  block:
+    - name: Alacritty - Install rustup
+      ansible.builtin.shell:
+        cmd: curl -sSf https://sh.rustup.rs | sh -s -- -y
+
+    - name: Alacritty - Install dependencies
+      become: true
+      ansible.builtin.apt:
+       name: "{{item}}"
+      with_items:
+        - cmake 
+        - pkg-config 
+        - libfreetype6-dev 
+        - libfontconfig1-dev 
+        - libxcb-xfixes0-dev 
+        - libxkbcommon-dev 
+        - python3
+
+    - name: Alacritty - Clone repository
+      ansible.builtin.git:
+        repo: https://github.com/alacritty/alacritty.git
+        dest: ~/third_party/alacritty
+
+    - name: Alacritty - Build
+      ansible.builtin.shell: 
+        chdir: ~/third_party/alacritty
+        cmd: ~/.cargo/bin/cargo build --release
+
+    - name: Alacritty - Install
+      become: true
+      ansible.builtin.copy:
+        src: "{{ lookup('env', 'HOME') }}/third_party/alacritty/target/release/alacritty"
+        dest: /usr/local/bin/alacritty
+        mode: a+x

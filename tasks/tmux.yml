@@ -4,6 +4,7 @@
     - tmux
   block:
     - name: Tmux - Install
+      become: true
       ansible.builtin.apt:
         name: tmux
         state: latest

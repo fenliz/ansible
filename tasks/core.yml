@@ -1,26 +1,14 @@
 - name: Install system packages
+  become: true
   apt: name={{item}}
   with_items:
-    - build-essential
-    - ninja-build
-    - pkg-config
     - unzip
-    - libtool
-    - libtool-bin
-    - gettext
     - curl
-    - cmake
-    - clangd
     - blueman
-    - lxappearance
-    - ubuntu-restricted-extras
-    - ffmpeg
-    - python3-pip
-    - arandr
-    - nm-applet
     - xclip
     - clipit
     - fzf
+    - zsh
   tags:
     - install
     - core

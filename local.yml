@@ -13,13 +13,13 @@
     - include: tasks/i3.yml
 
     # Development
+    - include: tasks/zsh.yml
     - include: tasks/node.yml
     - include: tasks/neovim.yml
-    - include: tasks/oh-my-zsh.yml
     - include: tasks/tmux.yml
     - include: tasks/docker.yml
-    - include: tasks/fzf.yml
     - include: tasks/github.yml
+    - include: tasks/alacritty.yml
 
     # Misc
     - include: tasks/chrome.yml

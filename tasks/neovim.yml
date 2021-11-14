@@ -3,10 +3,36 @@
     - install
     - neovim
   block:
+    - name: Neovim - Install dependencies
+      become: true
+      ansible.builtin.apt:
+       name: "{{item}}"
+      with_items:
+       - ninja-build 
+       - gettext 
+       - libtool 
+       - libtool-bin 
+       - autoconf 
+       - automake 
+       - cmake 
+       - g++ 
+       - pkg-config 
+       - unzip
+       - curl 
+       - doxygen
+
+
     - name: Neovim - Clone repository
       ansible.builtin.git:
         repo: https://github.com/neovim/neovim.git
         dest: ~/third_party/neovim
 
-    - name: Neovim - Build & install
-      shell: cd ~/third_party/neovim && make install
+    - name: Neovim - Build
+      ansible.builtin.shell: 
+        chdir: ~/third_party/neovim
+        cmd: make -j4
+
+    - name: Neovim - Install
+      ansible.builtin.shell:
+        chdir: ~/third_party/neovim
+        cmd: sudo make install

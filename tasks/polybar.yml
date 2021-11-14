@@ -26,6 +26,7 @@
         - libxcb-image0-dev 
         - libxcb-ewmh-dev 
         - libxcb-icccm4-dev
+        - rofi
 
     - name: Polybar - Install optional dependecies
       become: true
@@ -51,16 +52,3 @@
 
     - name: Polybar - Build & install
       shell: cd ~/third_party/polybar && ./build.sh
-
-    - name: Polybar - Clone themes repository
-      ansible.builtin.git:
-        repo: https://github.com/adi1090x/polybar-themes.git
-        depth: 1
-        dest: ~/third_party/polybar-themes
-
-    - name: Polybar - Build & install themes
-      shell: |
-        cd ~/third_party/polybar-themes && |
-        chmod +x setup.sh && |
-        "printf '1\n' | ./setup.sh"
-

@@ -6,16 +6,19 @@
 
     - name: .dotfiles - Clone repository
       ansible.builtin.git:
-        repo: https://github.com/fenliz/.dotfiles.git
-        dest: ~/development/.dotfiles
+        repo: git@github.com:fenliz/.dotfiles.git
+        dest: ~/.dotfiles
         recursive: yes
         update: yes
         accept_hostkey: yes
         version: master
 
     - name: .dotfiles - Install stow
+      become: true
       ansible.builtin.apt: 
         name: stow
 
     - name: .dotfiles - Stow files
-      shell: cd ~/development/.dotfiles && ./install.sh
+      shell: 
+        chdir: ~/.dotfiles
+        cmd: ./install.sh
