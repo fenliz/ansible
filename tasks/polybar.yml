@@ -38,7 +38,6 @@
         - libxcb-cursor-dev 
         - libasound2-dev 
         - libpulse-dev 
-        - i3-wm 
         - libjsoncpp-dev 
         - libmpdclient-dev 
         - libcurl4-openssl-dev 
@@ -51,4 +50,6 @@
         dest: ~/third_party/polybar
 
     - name: Polybar - Build & install
-      shell: cd ~/third_party/polybar && ./build.sh
+      ansible.builtin.shell:
+        chdir: ~/third_party/polybar
+        cmd: ./build.sh

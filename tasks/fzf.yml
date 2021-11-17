@@ -1,0 +1,15 @@
+- name: Fzf
+  tags:
+    - install
+    - fzf
+  block:
+    - name: Fzf - Clone repository
+      ansible.builtin.git:
+        repo: https://github.com/junegunn/fzf.git
+        depth: 1
+        dest: ~/third_party/fzf
+
+    - name: Fzf - Build & install
+      ansible.builtin.shell: 
+        chdir: ~/third_party/fzf
+        cmd: ./install

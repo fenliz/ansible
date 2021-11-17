@@ -19,6 +19,6 @@
         name: stow
 
     - name: .dotfiles - Stow files
-      shell: 
+      ansible.builtin.shell: 
         chdir: ~/.dotfiles
         cmd: ./install.sh

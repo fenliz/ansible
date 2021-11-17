@@ -9,6 +9,7 @@
     - clipit
     - fzf
     - zsh
+    - ripgrep
   tags:
     - install
     - core

@@ -4,6 +4,7 @@
     - install
     - i3
   block:
+
     - name: i3 - Add apt repository
       ansible.builtin.apt_repository:
         repo: ppa:regolith-linux/release
@@ -13,3 +14,12 @@
         name: i3-gaps
         update_cache: yes
         state: latest
+
+    - name: i3 - Install autotiling dependencies
+      ansible.builtin.apt:
+        name: python3-pip 
+
+    - name: i3 - Install autotiling
+      ansible.builtin.pip:
+        name: autotiling
+
