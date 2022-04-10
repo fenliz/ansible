@@ -21,7 +21,6 @@
        - curl 
        - doxygen
 
-
     - name: Neovim - Clone repository
       ansible.builtin.git:
         repo: https://github.com/neovim/neovim.git

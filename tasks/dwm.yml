@@ -1,0 +1,39 @@
+- name: dwm
+  tags:
+    - install
+    - dwm
+  block:
+    - name: dwm - Install dependencies
+      become: true
+      ansible.builtin.apt:
+       name: "{{item}}"
+      with_items:
+       - build-essential
+       - libxft-dev
+       - libx11-dev
+       - libxinerama-dev
+       - sharutils
+       - suckless-tools
+
+    - name: dwm - Clone repository
+      ansible.builtin.git:
+        repo: git://git.suckless.org/dwm
+        dest: ~/third_party/dwm
+
+    - name: dwm - Install
+      ansible.builtin.shell:
+        chdir: ~/third_party/dwm
+        cmd: sudo make clean install
+
+    - name: dwm - Add desktop entry
+      become: true
+      copy:
+        dest: "/usr/share/xsessions/dwm.desktop"
+        content: |
+          [Desktop Entry]
+          Encoding=UTF-8
+          Name=dwm
+          Comment=Dynamic window manager
+          Exec=dwm
+          Icon=dwm
+          Type=XSession

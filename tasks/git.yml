@@ -1,20 +1,27 @@
 
-- name: Github
-  become: true
+- name: Git
   tags:
     - install
-    - github
+    - git
   block:
-    - name: Github - Add apt key
+    - name: Git - Add Github apt key
+      become: true
       ansible.builtin.shell: 
         cmd: curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
 
-    - name: Github - Add apt repository
+    - name: Git - Add Github apt repository
+      become: true
       ansible.builtin.shell:
         cmd: echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | tee /etc/apt/sources.list.d/github-cli.list > /dev/null
 
-    - name: Github - Install
+    - name: Git - Install Github CLI
+      become: true
       ansible.builtin.apt:
         name: gh
         update_cache: yes
         state: latest
+
+    - name: Git - Clone forgit repository
+      ansible.builtin.git:
+        repo: https://github.com/wfxr/forgit.git
+        dest: ~/third_party/forgit
